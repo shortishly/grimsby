@@ -28,3 +28,7 @@ jobs:
       - run: cargo test
       - name: Build
         run: make deps app dialyze tests
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ct-logs
+          path: logs

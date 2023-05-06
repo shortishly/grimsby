@@ -119,7 +119,8 @@ echo_test(_Config) ->
               grimsby_command:info(Spawn)
       end),
 
-    ok = grimsby_command:send(Spawn, <<"cruel ">>),
+    %% may be in error state at this point...
+    _ = grimsby_command:send(Spawn, <<"cruel ">>),
 
     wait_for(
       {error,stdin},
