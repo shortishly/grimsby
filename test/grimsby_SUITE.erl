@@ -39,7 +39,7 @@ end_per_suite(_Config) ->
 
 invalid_current_dir_test(_Config) ->
     {ok, Spawn} = grimsby_command_sup:start_child(
-                    #{executable => "/bin/cat",
+                    #{executable => find_executable("cat"),
                       cd => "/this_dir_does_not_exist"}),
     [] = grimsby_port:all(),
     ?assertMatch(
@@ -57,7 +57,8 @@ invalid_command_test(_Config) ->
 
 
 line_buffered_cat_test(_Config) ->
-    {ok, Spawn} = grimsby_command_sup:start_child(#{executable => "/bin/cat"}),
+    {ok, Spawn} = grimsby_command_sup:start_child(
+                    #{executable => find_executable("cat")}),
     [{_, _}] = grimsby_port:all(),
 
     grimsby_command:send(Spawn, <<"hello \n">>),
@@ -105,7 +106,7 @@ line_buffered_cat_test(_Config) ->
 
 echo_test(_Config) ->
     {ok, Spawn} = grimsby_command_sup:start_child(
-                    #{executable => "/bin/echo",
+                    #{executable => find_executable("echo"),
                       args => ["abc"]}),
     ok = grimsby_command:send(Spawn, <<"hello ">>),
 
@@ -131,7 +132,8 @@ echo_test(_Config) ->
 
 
 cat_test(_Config) ->
-    {ok, Spawn} = grimsby_command_sup:start_child(#{executable => "/bin/cat"}),
+    {ok, Spawn} = grimsby_command_sup:start_child(
+                    #{executable => find_executable("cat")}),
     ok = grimsby_command:send(Spawn, <<"hello ">>),
     ok = grimsby_command:send(Spawn, "world!"),
     wait_for(
@@ -162,7 +164,8 @@ cat_test(_Config) ->
 
 
 kill_test(_Config) ->
-    {ok, Spawn} = grimsby_command_sup:start_child(#{executable => "/bin/cat"}),
+    {ok, Spawn} = grimsby_command_sup:start_child(
+                    #{executable => find_executable("cat")}),
     {ok, signal} = grimsby_command:kill(Spawn),
     wait_for(
       #{exit => signal,
@@ -202,4 +205,13 @@ wait_for(Expected, Check, N) ->
                    [Expected, Check, N, Unexpected]),
             timer:sleep(timer:seconds(1)),
             ?FUNCTION_NAME(Expected, Check, N - 1)
+    end.
+
+
+find_executable(Name) ->
+    case os:find_executable(Name) of
+        false ->
+            error(badarg, [Name]);
+        Filename ->
+            Filename
     end.
