@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="847 382 632 400" width="632" height="400">
+  <defs>
+    <filter id="Shadow" filterUnits="userSpaceOnUse" x="783.8" y="342">
+      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
+      <feOffset in="blur" result="offset" dx="0" dy="2"/>
+      <feFlood flood-color="black" flood-opacity=".5" result="flood"/>
+      <feComposite in="flood" in2="offset" operator="in"/>
+    </filter>
+    <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9cc523"/>
+      <stop offset="1" stop-color="#83a771"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(908.2785 541.1581) rotate(66) scale(89.59838)"/>
+    <linearGradient id="Obj_Gradient_2" xl:href="#Gradient" gradientTransform="translate(1145.1542 519.85495) rotate(66) scale(135.05)"/>
+    <linearGradient x1="0" x2="1" id="Gradient_2" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffec1b"/>
+      <stop offset="1" stop-color="#ffbc1c"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient_3" xl:href="#Gradient_2" gradientTransform="translate(1317.1437 375.141) rotate(66) scale(134.51597)"/>
+    <linearGradient id="Obj_Gradient_4" xl:href="#Gradient_2" gradientTransform="translate(1317.9181 665.7962) rotate(66) scale(130.70793)"/>
+    <linearGradient id="Obj_Gradient_5" xl:href="#Gradient_2" gradientTransform="translate(1397.1437 520.641) rotate(66) scale(134.51597)"/>
+    <linearGradient id="Obj_Gradient_6" xl:href="#Gradient" gradientTransform="translate(908.2785 541.1581) rotate(66) scale(89.59838)"/>
+    <linearGradient id="Obj_Gradient_7" xl:href="#Gradient" gradientTransform="translate(1145.1542 519.85495) rotate(66) scale(135.05)"/>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#7f8080">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="#7f8080">
+      <g>
+        <path d="M -8 0 L 0 3 L 0 -3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <linearGradient id="Obj_Gradient_8" xl:href="#Gradient_2" gradientTransform="translate(1317.1437 375.141) rotate(66) scale(134.51597)"/>
+    <linearGradient id="Obj_Gradient_9" xl:href="#Gradient_2" gradientTransform="translate(1317.9181 665.7962) rotate(66) scale(130.70793)"/>
+    <linearGradient id="Obj_Gradient_10" xl:href="#Gradient_2" gradientTransform="translate(1397.1437 520.641) rotate(66) scale(134.51597)"/>
+  </defs>
+  <g id="grimsby" stroke="none" fill-opacity="1" stroke-dasharray="none" fill="none" stroke-opacity="1">
+    <title>grimsby</title>
+    <rect fill="white" x="847" y="382" width="632" height="400"/>
+    <g id="grimsby_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2_shadow" filter="url(#Shadow)">
+        <path d="M 886 555.0842 L 967 555.0842 C 971.9706 555.0842 976 559.11365 976 564.0842 L 976 600.0842 C 976 605.0548 971.9706 609.0842 967 609.0842 L 886 609.0842 C 881.0294 609.0842 877 605.0548 877 600.0842 L 877 564.0842 C 877 559.11365 881.0294 555.0842 886 555.0842 Z" fill="url(#Obj_Gradient)"/>
+        <path d="M 886 555.0842 L 967 555.0842 C 971.9706 555.0842 976 559.11365 976 564.0842 L 976 600.0842 C 976 605.0548 971.9706 609.0842 967 609.0842 L 886 609.0842 C 881.0294 609.0842 877 605.0548 877 600.0842 L 877 564.0842 C 877 559.11365 881.0294 555.0842 886 555.0842 Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g id="Graphic_4_shadow" filter="url(#Shadow)">
+        <ellipse cx="1172.6191" cy="581.5421" rx="50.4402729846326" ry="51.4579769615096" fill="url(#Obj_Gradient_2)"/>
+        <ellipse cx="1172.6191" cy="581.5421" rx="50.4402729846326" ry="51.4579769615096" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g id="Graphic_14_shadow" filter="url(#Shadow)">
+        <ellipse cx="1344.5" cy="436.5842" rx="49.5000790961438" ry="51.5842929528237" fill="url(#Obj_Gradient_3)"/>
+        <ellipse cx="1344.5" cy="436.5842" rx="49.5000790961438" ry="51.5842929528237" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g id="Graphic_22_shadow" filter="url(#Shadow)">
+        <circle cx="1344.5" cy="725.5" r="49.5000790961438" fill="url(#Obj_Gradient_4)"/>
+        <circle cx="1344.5" cy="725.5" r="49.5000790961438" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g id="Graphic_25_shadow" filter="url(#Shadow)">
+        <ellipse cx="1424.5" cy="582.0842" rx="49.5000790961438" ry="51.5842929528237" fill="url(#Obj_Gradient_5)"/>
+        <ellipse cx="1424.5" cy="582.0842" rx="49.5000790961438" ry="51.5842929528237" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g id="Graphic_28">
+        <path d="M 854 494 L 1245 494 C 1247.7614 494 1250 496.2386 1250 499 L 1250 669 C 1250 671.7614 1247.7614 674 1245 674 L 854 674 C 851.2386 674 849 671.7614 849 669 L 849 499 C 849 496.2386 851.2386 494 854 494 Z" stroke="#9cc523" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3.0,12.0" stroke-width="3"/>
+        <text transform="translate(854 499)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" fill="black" x="0" y="10">grimsby</tspan>
+        </text>
+      </g>
+      <g id="Graphic_2">
+        <path d="M 886 555.0842 L 967 555.0842 C 971.9706 555.0842 976 559.11365 976 564.0842 L 976 600.0842 C 976 605.0548 971.9706 609.0842 967 609.0842 L 886 609.0842 C 881.0294 609.0842 877 605.0548 877 600.0842 L 877 564.0842 C 877 559.11365 881.0294 555.0842 886 555.0842 Z" fill="url(#Obj_Gradient_6)"/>
+        <path d="M 886 555.0842 L 967 555.0842 C 971.9706 555.0842 976 559.11365 976 564.0842 L 976 600.0842 C 976 605.0548 971.9706 609.0842 967 609.0842 L 886 609.0842 C 881.0294 609.0842 877 605.0548 877 600.0842 L 877 564.0842 C 877 559.11365 881.0294 555.0842 886 555.0842 Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(882 575.0842)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="9.821289" y="11">grimsby_port</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <ellipse cx="1172.6191" cy="581.5421" rx="50.4402729846326" ry="51.4579769615096" fill="url(#Obj_Gradient_7)"/>
+        <ellipse cx="1172.6191" cy="581.5421" rx="50.4402729846326" ry="51.4579769615096" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(1137.267 560.5421)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="24.348248" y="11">Port </tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="9.342388" y="25">Controller </tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="19.019146" y="39">(Rust)</tspan>
+        </text>
+      </g>
+      <g id="Line_5">
+        <line x1="987.4" y1="581.9501" x2="1110.779" y2="581.6783" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_9">
+        <rect x="1000.0567" y="558.3685" width="95.952" height="46.895996" fill="white"/>
+        <text transform="translate(1005.0567 563.3685)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="5684342e-19" y="15">stdin/stdout</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="28.752" y="33.448">bert</tspan>
+        </text>
+      </g>
+      <g id="Graphic_14">
+        <ellipse cx="1344.5" cy="436.5842" rx="49.5000790961438" ry="51.5842929528237" fill="url(#Obj_Gradient_8)"/>
+        <ellipse cx="1344.5" cy="436.5842" rx="49.5000790961438" ry="51.5842929528237" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(1309.9 422.5842)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="10.58242" y="11">spawned </tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="8.587303" y="25">process 1</tspan>
+        </text>
+      </g>
+      <g id="Line_18">
+        <line x1="1297.3033" y1="476.3881" x2="1220.2127" y2="541.4035" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_19">
+        <rect x="1213.4094" y="495.54505" width="95.94" height="22.28" fill="white"/>
+        <text transform="translate(1218.4094 500.54505)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" fill="black" x="1.39" y="10">stdin/stdout/stderr </tspan>
+        </text>
+      </g>
+      <g id="Graphic_22">
+        <circle cx="1344.5" cy="725.5" r="49.5000790961438" fill="url(#Obj_Gradient_9)"/>
+        <circle cx="1344.5" cy="725.5" r="49.5000790961438" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(1309.9 711.5)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="10.58242" y="11">spawned </tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="8.587303" y="25">process n</tspan>
+        </text>
+      </g>
+      <g id="Line_24">
+        <line x1="1297.8098" y1="686.3949" x2="1220.3468" y2="621.51616" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_23">
+        <rect x="1213.7415" y="645.0209" width="95.94" height="22.28" fill="white"/>
+        <text transform="translate(1218.7415 650.0209)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" fill="black" x="1.39" y="10">stdin/stdout/stderr </tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <ellipse cx="1424.5" cy="582.0842" rx="49.5000790961438" ry="51.5842929528237" fill="url(#Obj_Gradient_10)"/>
+        <ellipse cx="1424.5" cy="582.0842" rx="49.5000790961438" ry="51.5842929528237" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(1389.9 568.0842)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="10.58242" y="11">spawned </tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="8.587303" y="25">process 2</tspan>
+        </text>
+      </g>
+      <g id="Line_27">
+        <line x1="1363.6001" y1="581.95314" x2="1234.4592" y2="581.6752" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="#7f8080" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_26">
+        <rect x="1255.293" y="570.6833" width="95.94" height="22.28" fill="white"/>
+        <text transform="translate(1260.293 575.6833)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" fill="black" x="1.39" y="10">stdin/stdout/stderr </tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

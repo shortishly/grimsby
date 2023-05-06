@@ -1,0 +1,12 @@
+/target
+/*.d
+/ebin
+/.erlang.mk
+*~
+/*.plt
+/*.log
+/deps
+/logs
+/test/*.beam
+/doc
+!/doc/overview.edoc
