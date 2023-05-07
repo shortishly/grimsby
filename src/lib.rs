@@ -329,13 +329,10 @@ fn spawn(
                                 // advise the port that some data has been received on a specific
                                 // stream (stdin, stdout or stderr) from the spawned process
 
-                                let mut contents = Vec::new();
-                                contents.extend_from_slice(data.as_bytes());
-
                                 if let Err(..) = port_tx.send(Term::Tuple(vec![
                                     stream_to_atom(&stream),
                                     child_id.clone(),
-                                    Term::Binary(contents),
+                                    Term::Binary(data),
                                 ])) {
                                     break;
                                 }

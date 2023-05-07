@@ -56,7 +56,7 @@ pub enum Control {
     /// A notification that the process has exited with a status code or signal
     Exit(Exit),
     /// A notification that the process has sent data on the stdout or stderr streams
-    Received { stream: Stream, data: String },
+    Received { stream: Stream, data: Vec<u8> },
     /// A request from the controller to wait for the process to exit
     WaitForExit,
     /// A request from the controller to kill the process with a signal
@@ -212,20 +212,23 @@ fn stdout_handler(control_tx: Sender<Control>, child: &mut Child) -> Option<Join
         let mut r = BufReader::new(stdout);
 
         loop {
-            let mut buf = String::new();
-
-            match r.read_line(&mut buf) {
-                Ok(0) => {
+            match r.fill_buf() {
+                Ok([]) => {
                     control_tx
                         .send(Control::EndOfFile(Stream::Output))
                         .unwrap_or_default();
                     break;
                 }
 
-                Ok(..) => {
+                Ok(buffer) => {
+                    let mut data = Vec::new();
+                    data.extend_from_slice(buffer);
+                    let amt = buffer.len();
+                    r.consume(amt);
+
                     if let Err(..) = control_tx.send(Control::Received {
                         stream: Stream::Output,
-                        data: buf,
+                        data,
                     }) {
                         break;
                     }
@@ -250,28 +253,32 @@ fn stderr_handler(control_tx: Sender<Control>, child: &mut Child) -> Option<Join
         let mut r = BufReader::new(stderr);
 
         loop {
-            let mut buf = String::new();
-
-            match r.read_line(&mut buf) {
-                Ok(0) => {
+            match r.fill_buf() {
+                Ok([]) => {
                     control_tx
                         .send(Control::EndOfFile(Stream::Error))
                         .unwrap_or_default();
                     break;
                 }
 
-                Ok(..) => {
+                Ok(buffer) => {
+                    let mut data = Vec::new();
+                    data.extend_from_slice(buffer);
+                    let amt = buffer.len();
+                    r.consume(amt);
+
                     if let Err(..) = control_tx.send(Control::Received {
                         stream: Stream::Error,
-                        data: buf,
+                        data,
                     }) {
                         break;
                     }
                 }
 
-                Err(..) => {
+                Err(error) => {
+                    dbg!(error);
                     control_tx
-                        .send(Control::Error(Stream::Error))
+                        .send(Control::Error(Stream::Output))
                         .unwrap_or_default();
                     break;
                 }
