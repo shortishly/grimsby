@@ -70,6 +70,7 @@ start_link() ->
 
 -type run_arg() :: #{executable := string(),
                      args => [string()],
+                     envs => #{string() => string()},
                      arg0 => string(),
                      cd => file:filename(),
                      send_to => gen_statem:server_ref()}.

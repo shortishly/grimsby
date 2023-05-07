@@ -274,6 +274,20 @@ fn spawn(
             }
         }
 
+        // "envs" is an optional Map of Erlang String terms that are the environment for the executable
+        if let Some(Term::Map(envs)) = kv.get(&Term::Atom(String::from("envs"))) {
+            for (k, v) in envs.iter() {
+                match (k, v) {
+                    (Term::String(name), Term::String(value)) => {
+                        command.env(name, value);
+                    }
+
+                    // silently discarding args isn't great, should end up being an error response
+                    _otherwise => {}
+                }
+            }
+        }
+
         // "arg0" is an optional key, specifying the program name
         if let Some(Term::String(value)) = kv.get(&Term::Atom(String::from("arg0"))) {
             command.arg0(value);

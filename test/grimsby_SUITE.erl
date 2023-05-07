@@ -104,6 +104,23 @@ line_buffered_cat_test(_Config) ->
     [] = grimsby_port:all().
 
 
+env_test(_Config) ->
+    K = alpha(5),
+    V = alpha(5),
+    {ok, Spawn} = grimsby_command_sup:start_child(
+                    #{executable => find_executable("env"),
+                      envs => #{K => V}}),
+    Expected = iolist_to_binary([K, "=", V, "\n"]),
+    wait_for(
+      true,
+      fun
+          () ->
+              #{stdout := IOData} = grimsby_command:info(Spawn),
+              binary:match(iolist_to_binary(IOData), Expected) /= nomatch
+      end),
+    {ok, 0} = grimsby_command:wait_for_exit(Spawn).
+
+
 echo_test(_Config) ->
     {ok, Spawn} = grimsby_command_sup:start_child(
                     #{executable => find_executable("echo"),
@@ -216,3 +233,20 @@ find_executable(Name) ->
         Filename ->
             Filename
     end.
+
+
+alpha(N) ->
+    pick(N, lists:seq($a, $z)).
+
+
+pick(N, Pool) ->
+    ?FUNCTION_NAME(N, Pool, []).
+
+
+pick(0, _, A) ->
+    A;
+
+pick(N, Pool, A) ->
+    ?FUNCTION_NAME(N - 1,
+                   Pool,
+                   [lists:nth(rand:uniform(length(Pool)), Pool) | A]).

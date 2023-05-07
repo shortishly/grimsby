@@ -36,6 +36,7 @@
 
 -type start_arg() :: #{executable := string(),
                        args => [string()],
+                       envs => #{string() => string()},
                        arg0 => string(),
                        cd => file:filename()}.
 
@@ -97,7 +98,7 @@ init([Arg]) ->
      unready,
      #{requests => gen_statem:send_request(
                      grimsby_port,
-                     {run, maps:with([executable, args, arg0, cd], Arg)},
+                     {run, maps:with([executable, args, envs, arg0, cd], Arg)},
                      #{request => run},
                      gen_statem:reqids_new()),
        eof => ordsets:new(),

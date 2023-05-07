@@ -75,7 +75,7 @@ and when necessary, while capturing output on both stdout and stderr:
   eof => [stderr, stdin, stderr],
   stderr => [],
   stdout => [[],<<"3785 1\n">>]}
-  
+
 6> grimsby_command:stop(Spawn).
 ```
 
@@ -88,10 +88,13 @@ with `grimsby_command`:
 
   %% optional list of arguments (default [])
   args => [string()],
-  
+
+  %% optional map of environment variables
+  envs => #{string() => string()},
+
   %% optional arg0 name
   arg0 => string(),
-  
+
   %% optional working diretory of the process
   cd => file:filename()
 ```
@@ -120,13 +123,16 @@ The parameters supplied to spawn a process are the same as for
 
   %% optional list of arguments (default [])
   args => [string()],
-  
+
+  %% optional map of environment variables
+  envs => #{string() => string()},
+
   %% optional arg0 name
   arg0 => string(),
-  
+
   %% optional working diretory of the process
   cd => file:filename()
-  
+
   %% optional pid/name of process to send messages
   %% default to pid of caller:
   send_to => gen_statem:server_ref()}
@@ -210,12 +216,16 @@ The following messages are exchanged over the port:
  ChildId :: reference(),
  InteractionId :: reference(),
  #{executable := string(),
+
    %% optional list of arguments (default [])
    args => [string()],
-  
+
+   %% optional map of environment variables
+   envs => #{string() => string()},
+
    %% optional arg0 name
    arg0 => string(),
-  
+
    %% optional working diretory of the process
    cd => file:filename()}
 }
@@ -325,7 +335,7 @@ In response:
 {InteractionId :: reference(), ok}
 ```
 
-If the request queued to be sent to the spawned process.
+If the request was queued to be sent to the spawned process.
 
 ```erlang
 {InteractionId :: reference(), {error, term()}}
@@ -349,7 +359,7 @@ In response:
 {InteractionId :: reference(), ok}
 ```
 
-If the request queued to be sent to the spawned process.
+If the request was queued to be sent to the spawned process.
 
 ```erlang
 {InteractionId :: reference(), {error, term()}}
@@ -372,7 +382,7 @@ In response:
 {InteractionId :: reference(), ok}
 ```
 
-If the request queued to be sent to the spawned process.
+If the request was queued to be sent to the spawned process.
 
 ```erlang
 {InteractionId :: reference(), {error, term()}}
