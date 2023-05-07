@@ -50,7 +50,7 @@ pub enum Control {
     /// A notification from the process that EOF has been reached on a stream
     EndOfFile(Stream),
     /// A request from the controller to send data to the stdin of the process
-    Send(String),
+    Send(Vec<u8>),
     /// An error indicator from the process
     Error(Stream),
     /// A notification that the process has exited with a status code or signal
@@ -173,7 +173,7 @@ fn stdin_handler(
     let sin = thread::spawn(move || loop {
         match input_rx.recv() {
             Ok(Control::Send(data)) => {
-                if let Err(..) = stdin.write_all(data.as_bytes()) {
+                if let Err(..) = stdin.write_all(data.as_slice()) {
                     control_tx
                         .send(Control::Error(Stream::Input))
                         .unwrap_or_default();

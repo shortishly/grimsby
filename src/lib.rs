@@ -16,11 +16,8 @@ use crate::bert::Term;
 use crate::process::Control;
 use crate::process::Process;
 use std::collections::BTreeMap;
-use std::ffi::OsStr;
-use std::ffi::OsString;
 use std::io;
 use std::io::Write;
-use std::os::unix::prelude::OsStrExt;
 use std::os::unix::process::CommandExt;
 use std::process::Command;
 use std::sync::mpsc::channel;
@@ -202,7 +199,10 @@ fn send(
     if let Some(Mapping { tx, .. }) = mapping.get(child_id) {
         match data {
             Term::String(string) => {
-                if let Ok(()) = tx.send(process::Control::Send(string.clone())) {
+                let mut contents = Vec::new();
+                contents.extend_from_slice(string.as_bytes());
+
+                if let Ok(()) = tx.send(process::Control::Send(contents)) {
                     reply_ok(interaction_id)
                 } else {
                     reply_error(interaction_id, Term::Atom(String::from("send")))
@@ -210,10 +210,7 @@ fn send(
             }
 
             Term::Binary(value) => {
-                let mut content = OsString::new();
-                content.push(OsStr::from_bytes(value.as_slice()));
-
-                if let Ok(()) = tx.send(process::Control::Send(content.into_string().unwrap())) {
+                if let Ok(()) = tx.send(process::Control::Send(value.clone())) {
                     reply_ok(interaction_id)
                 } else {
                     reply_error(interaction_id, Term::Atom(String::from("send")))
