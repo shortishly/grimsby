@@ -52,7 +52,7 @@ include erlang.mk
 .PHONY: priv/grimsby
 
 priv/grimsby:
-	cargo build --verbose
+	cargo build --verbose --config net.git-fetch-with-cli=true
 	cp -p target/debug/grimsby priv
 
 app:: priv/grimsby
