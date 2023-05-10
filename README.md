@@ -72,7 +72,7 @@ and when necessary, while capturing output on both stdout and stderr:
 %% output is captured from stdout and stderr as iodata:
 5> grimsby_command:info(Spawn).
 #{exit => 0,
-  eof => [stderr, stdin, stderr],
+  eof => [stderr, stdin, stdout],
   stderr => [],
   stdout => [[],<<"3785 1\n">>]}
 

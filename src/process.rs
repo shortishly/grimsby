@@ -173,7 +173,14 @@ fn stdin_handler(
     let sin = thread::spawn(move || loop {
         match input_rx.recv() {
             Ok(Control::Send(data)) => {
-                if let Err(..) = stdin.write_all(data.as_slice()) {
+                if let Ok(()) = stdin.write_all(data.as_slice()) {
+                    if let Err(..) = stdin.flush() {
+                        control_tx
+                            .send(Control::Error(Stream::Input))
+                            .unwrap_or_default();
+                        break;
+                    }
+                } else {
                     control_tx
                         .send(Control::Error(Stream::Input))
                         .unwrap_or_default();
