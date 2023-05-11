@@ -2,6 +2,28 @@
 
 ![ci](https://github.com/shortishly/grimsby/actions/workflows/ci.yml/badge.svg)
 
+An Erlang Port provides the basic mechanism for communication from
+Erlang with the external world.
+
+From the [Ports and Port Drivers: Erlang Reference
+Manual][erlang-org-ref-ports]:
+
+>The Erlang process creating a port is said to be the port owner, or
+>the connected process of the port. All communication to and from the
+>port must go through the port owner. If the port owner terminates, so
+>does the port (and the external program, if it is written correctly).
+>
+>The external program resides in another OS process. By default, it
+>reads from standard input (file descriptor 0) and writes to standard
+>output (file descriptor 1). The external program is to terminate when
+>the port is closed.
+
+An Erlang Port will work exactly as they are designed to, closing the
+port, terminates the program. A lot of times this is just *exactly*
+what you need. Sometimes, however, you need to close standard input
+(file descriptor 0) and still allow the program to continue running
+(which is the use case here with `git`).
+
 Grimsby is an Erlang Port written in Rust that can close its standard
 input while retaining standard output (and error).
 
@@ -11,13 +33,12 @@ because standard input remains open:
 ```erlang
 1> Port = erlang:open_port({spawn_executable, "/bin/cat"},
                            [binary, eof, use_stdio, exit_status, stream]).
-#Port<0.6>
 
 2> erlang:port_command(Port, "hello world!").
 true
 
 3> flush().
-Shell got {#Port<0.6>, {data, <<"hello world!">>}}
+Shell got {Port, {data, <<"hello world!">>}}
 ok
 
 4> erlang:port_close(Port).
@@ -110,7 +131,7 @@ application that needs asynchronous notification on receiving data,
 or the exit of the spawned process.
 
 Note that, notifications are sent using `gen_statem:send_request/4`
-and _must_ be replied to! An 'ok' will continue processing, while
+and *must* be replied to! An 'ok' will continue processing, while
 `{error, term()}` will stop the process.
 
 The parameters supplied to spawn a process are the same as for
@@ -395,3 +416,4 @@ If the request could not be queued to the process.
 [Apache-2.0](LICENSE).
 
 [bert]: https://www.erlang.org/doc/apps/erts/erl_ext_dist.html
+[erlang-org-ref-ports]: https://www.erlang.org/docs/17/reference_manual/ports.html
