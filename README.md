@@ -21,11 +21,7 @@ Manual][erlang-org-ref-ports]:
 An Erlang Port will work exactly as they are designed to, closing the
 port, terminates the program. A lot of times this is just *exactly*
 what you need. Sometimes, however, you need to close standard input
-(file descriptor 0) and still allow the program to continue running
-(which is the use case here with `git`).
-
-Grimsby is an Erlang Port written in Rust that can close its standard
-input while retaining standard output (and error).
+(file descriptor 0) and still allow the program to continue running.
 
 For example, the following using just `erlang:open_port/2` works
 because standard input remains open:
@@ -74,6 +70,9 @@ standard output (and error). The `data` message is never received with
 the checksum as a result.
 
 ## Grimsby Command
+
+Grimsby is an Erlang Port written in Rust that can close its standard
+input while retaining standard output (and error).
 
 With `grimsby_command`, an executable can be spawned, closing stdin if
 and when necessary, while capturing output on both stdout and stderr:
