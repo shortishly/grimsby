@@ -22,7 +22,7 @@ fn integer_ext(w: &mut dyn Write, integer: &i32) -> Result<(), Error> {
 }
 
 fn atom_ext(w: &mut dyn Write, value: &String) -> Result<(), Error> {
-    u8(w, &super::ATOM_EXT)?;
+    u8(w, &super::ATOM_UTF8_EXT)?;
     u16(w, &(value.len() as u16))?;
     let mut os = OsString::new();
     os.push(value.as_str());

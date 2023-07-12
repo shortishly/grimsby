@@ -15,7 +15,7 @@
 #
 PROJECT = grimsby
 PROJECT_DESCRIPTION = Erlang/Rust Port Manager
-PROJECT_VERSION = 0.1.0
+PROJECT_VERSION = ${shell git describe --tags}
 
 DEPS = \
 	envy

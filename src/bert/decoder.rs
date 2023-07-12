@@ -29,8 +29,34 @@ fn integer_ext(i: &[u8]) -> IResult<&[u8], Term> {
 }
 
 fn atom(i: &[u8]) -> IResult<&[u8], Term> {
+    alt((atom_ext, atom_utf8_ext, small_atom_utf8_ext))(i)
+}
+
+fn atom_ext(i: &[u8]) -> IResult<&[u8], Term> {
     let (i, _) = tag([super::ATOM_EXT])(i)?;
     let (i, length) = u16(i)?;
+    let (i, value) = take(length)(i)?;
+
+    let mut content = OsString::new();
+    content.push(OsStr::from_bytes(value));
+
+    Ok((i, Term::Atom(content.into_string().unwrap())))
+}
+
+fn atom_utf8_ext(i: &[u8]) -> IResult<&[u8], Term> {
+    let (i, _) = tag([super::ATOM_UTF8_EXT])(i)?;
+    let (i, length) = u16(i)?;
+    let (i, value) = take(length)(i)?;
+
+    let mut content = OsString::new();
+    content.push(OsStr::from_bytes(value));
+
+    Ok((i, Term::Atom(content.into_string().unwrap())))
+}
+
+fn small_atom_utf8_ext(i: &[u8]) -> IResult<&[u8], Term> {
+    let (i, _) = tag([super::SMALL_ATOM_UTF8_EXT])(i)?;
+    let (i, length) = u8(i)?;
     let (i, value) = take(length)(i)?;
 
     let mut content = OsString::new();
@@ -601,5 +627,53 @@ mod tests {
         let data = &[131, 110, 5, 1, 249, 1, 131, 182, 28];
         let (_, value) = decode(data).unwrap();
         assert_eq!(Term::Bignum(-123_321_123_321), value);
+    }
+
+    #[test]
+    fn otp26() {
+        let data = &[
+            131, 104, 4, 119, 5, 115, 112, 97, 119, 110, 90, 0, 3, 119, 13, 110, 111, 110, 111,
+            100, 101, 64, 110, 111, 104, 111, 115, 116, 0, 0, 0, 0, 0, 1, 110, 233, 2, 200, 0, 2,
+            3, 48, 197, 195, 90, 0, 3, 119, 13, 110, 111, 110, 111, 100, 101, 64, 110, 111, 104,
+            111, 115, 116, 0, 0, 0, 0, 0, 1, 110, 234, 2, 200, 0, 2, 3, 48, 197, 195, 116, 0, 0, 0,
+            1, 119, 10, 101, 120, 101, 99, 117, 116, 97, 98, 108, 101, 107, 0, 8, 47, 98, 105, 110,
+            47, 99, 97, 116,
+        ];
+        let (_, value) = decode(data).unwrap();
+        assert_eq!(Term::Bignum(-123_321_123_321), value);
+    }
+
+    #[test]
+    fn otp_newer_reference() {
+        let data = &[
+            131, 90, 0, 3, 119, 13, 110, 111, 110, 111, 100, 101, 64, 110, 111, 104, 111, 115, 116,
+            0, 0, 0, 0, 0, 1, 110, 234, 2, 200, 0, 2, 3, 48, 197, 195,
+        ];
+        let (_, value) = decode(data).unwrap();
+        assert_eq!(
+            Term::Reference(Reference::NewerReferenceExt {
+                node: Box::new(Term::Atom(String::from("nonode@nohost"))),
+                creation: 0,
+                ids: vec![93930, 46661634, 53528003]
+            }),
+            value
+        );
+    }
+
+    #[test]
+    fn otp26_map() {
+        let data = &[
+            131, 116, 0, 0, 0, 1, 119, 10, 101, 120, 101, 99, 117, 116, 97, 98, 108, 101, 107, 0,
+            8, 47, 98, 105, 110, 47, 99, 97, 116,
+        ];
+        let (_, value) = decode(data).unwrap();
+
+        let mut left = BTreeMap::new();
+        left.insert(
+            Term::Atom(String::from("executable")),
+            Term::String(String::from("/bin/cat")),
+        );
+
+        assert_eq!(Term::Map(left), value);
     }
 }

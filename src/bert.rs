@@ -42,6 +42,8 @@ const SMALL_BIG_EXT: u8 = 110;
 const LARGE_BIG_EXT: u8 = 111;
 const NEW_REFERENCE_EXT: u8 = 114;
 const MAP_EXT: u8 = 116;
+const ATOM_UTF8_EXT: u8 = 118;
+const SMALL_ATOM_UTF8_EXT: u8 = 119;
 const V4_PORT_EXT: u8 = 120;
 
 /// Term
