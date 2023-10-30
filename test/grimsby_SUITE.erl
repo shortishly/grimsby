@@ -56,6 +56,21 @@ invalid_command_test(_Config) ->
        grimsby_command:send(Spawn, <<"hello \n">>)).
 
 
+info(Spawn) ->
+    fun
+        () ->
+            maps:map(
+              fun
+                  (K, V) when K == stderr; K == stdout ->
+                      iolist_to_binary(V);
+
+                  (_, V) ->
+                      V
+              end,
+              grimsby_command:info(Spawn))
+    end.    
+
+
 line_buffered_cat_test(_Config) ->
     {ok, Spawn} = grimsby_command_sup:start_child(
                     #{executable => find_executable("cat")}),
@@ -64,43 +79,31 @@ line_buffered_cat_test(_Config) ->
     grimsby_command:send(Spawn, <<"hello \n">>),
     wait_for(
       #{eof => [],
-        stderr => [],
-        stdout => [[], <<"hello \n">>]},
-      fun
-          () ->
-              grimsby_command:info(Spawn)
-      end),
+        stderr => <<>>,
+        stdout => <<"hello \n">>},
+      info(Spawn)),
 
     grimsby_command:send(Spawn, "world!\n"),
     wait_for(
       #{eof => [],
-        stderr => [],
-        stdout => [[[], <<"hello \n">>], <<"world!\n">>]},
-      fun
-          () ->
-              grimsby_command:info(Spawn)
-      end),
+        stderr => <<>>,
+        stdout => <<"hello \nworld!\n">>},
+      info(Spawn)),
 
     grimsby_command:close(Spawn),
     wait_for(
-      #{stderr => [],
+      #{stderr => <<>>,
         eof => [stderr, stdin, stdout],
-        stdout => [[[], <<"hello \n">>], <<"world!\n">>]},
-      fun
-          () ->
-              grimsby_command:info(Spawn)
-      end),
+        stdout => <<"hello \nworld!\n">>},
+      info(Spawn)),
 
     {ok, 0} = grimsby_command:wait_for_exit(Spawn),
     wait_for(
       #{exit => 0,
         eof => [stderr, stdin, stdout],
-        stderr => [],
-        stdout => [[[], <<"hello \n">>], <<"world!\n">>]},
-      fun
-          () ->
-              grimsby_command:info(Spawn)
-      end),
+        stderr => <<>>,
+        stdout => <<"hello \nworld!\n">>},
+      info(Spawn)),
     [] = grimsby_port:all().
 
 
@@ -129,12 +132,9 @@ echo_test(_Config) ->
 
     wait_for(
       #{eof => [stderr, stdout],
-        stderr => [],
-        stdout => [[], <<"abc\n">>]},
-      fun
-          () ->
-              grimsby_command:info(Spawn)
-      end),
+        stderr => <<>>,
+        stdout => <<"abc\n">>},
+      info(Spawn)),
 
     %% may be in error state at this point...
     _ = grimsby_command:send(Spawn, <<"cruel ">>),
@@ -155,30 +155,21 @@ cat_test(_Config) ->
     ok = grimsby_command:send(Spawn, <<"hello ">>),
     ok = grimsby_command:send(Spawn, "world!"),
     wait_for(
-      #{eof => [], stderr => [], stdout => []},
-      fun
-          () ->
-                    grimsby_command:info(Spawn)
-      end),
+      #{eof => [], stderr => <<>>, stdout => <<>>},
+      info(Spawn)),
     grimsby_command:close(Spawn),
     wait_for(
-      #{stderr => [],
+      #{stderr => <<>>,
         eof => [stderr, stdin, stdout],
-        stdout => [[],<<"hello world!">>]},
-      fun
-          () ->
-                    grimsby_command:info(Spawn)
-            end),
+        stdout => <<"hello world!">>},
+      info(Spawn)),
     grimsby_command:wait_for_exit(Spawn),
     wait_for(
       #{exit => 0,
         eof => [stderr, stdin, stdout],
-        stderr => [],
-        stdout => [[],<<"hello world!">>]},
-      fun
-          () ->
-                    grimsby_command:info(Spawn)
-            end).
+        stderr => <<>>,
+        stdout => <<"hello world!">>},
+      info(Spawn)).
 
 
 kill_test(_Config) ->
@@ -188,12 +179,9 @@ kill_test(_Config) ->
     wait_for(
       #{exit => signal,
         eof => [],
-        stderr => [],
-        stdout => []},
-      fun
-          () ->
-                    grimsby_command:info(Spawn)
-            end).
+        stderr => <<>>,
+        stdout => <<>>},
+      info(Spawn)).
 
 
 wait_for(Expected, Check) ->
