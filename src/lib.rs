@@ -51,7 +51,7 @@ pub fn manager() {
         // and optionally replying back with another Erlang term (success or failure of that operation).
         //
         if let Some(reply) = dispatch(&mut mapping, port_tx.clone(), &term) {
-            if let Err(..) = port_tx.send(reply) {
+            if port_tx.send(reply).is_err() {
                 break;
             }
         }
@@ -313,11 +313,14 @@ fn spawn(
                                 // advise the port that EOF has been reached on a specific
                                 // stream (stdin, stdout or stderr) from the spawned process
 
-                                if let Err(..) = port_tx.send(Term::Tuple(vec![
-                                    Term::Atom(String::from("eof")),
-                                    child_id.clone(),
-                                    stream_to_atom(&stream),
-                                ])) {
+                                if port_tx
+                                    .send(Term::Tuple(vec![
+                                        Term::Atom(String::from("eof")),
+                                        child_id.clone(),
+                                        stream_to_atom(&stream),
+                                    ]))
+                                    .is_err()
+                                {
                                     break;
                                 }
                             }
@@ -326,11 +329,14 @@ fn spawn(
                                 // advise the port that some data has been received on a specific
                                 // stream (stdin, stdout or stderr) from the spawned process
 
-                                if let Err(..) = port_tx.send(Term::Tuple(vec![
-                                    stream_to_atom(&stream),
-                                    child_id.clone(),
-                                    Term::Binary(data),
-                                ])) {
+                                if port_tx
+                                    .send(Term::Tuple(vec![
+                                        stream_to_atom(&stream),
+                                        child_id.clone(),
+                                        Term::Binary(data),
+                                    ]))
+                                    .is_err()
+                                {
                                     break;
                                 }
                             }
@@ -338,11 +344,14 @@ fn spawn(
                             Ok(process::Control::Exit(process::Exit::Code(status))) => {
                                 // advise the port that the spawned process has exited with
                                 // a status code
-                                if let Err(..) = port_tx.send(Term::Tuple(vec![
-                                    Term::Atom(String::from("exit")),
-                                    child_id.clone(),
-                                    Term::Integer(status),
-                                ])) {
+                                if port_tx
+                                    .send(Term::Tuple(vec![
+                                        Term::Atom(String::from("exit")),
+                                        child_id.clone(),
+                                        Term::Integer(status),
+                                    ]))
+                                    .is_err()
+                                {
                                     break;
                                 }
                             }
@@ -350,22 +359,28 @@ fn spawn(
                             Ok(process::Control::Exit(process::Exit::Signal)) => {
                                 // advise the port that spawned process has exited after being
                                 // killed by a signal
-                                if let Err(..) = port_tx.send(Term::Tuple(vec![
-                                    Term::Atom(String::from("exit")),
-                                    child_id.clone(),
-                                    Term::Atom(String::from("signal")),
-                                ])) {
+                                if port_tx
+                                    .send(Term::Tuple(vec![
+                                        Term::Atom(String::from("exit")),
+                                        child_id.clone(),
+                                        Term::Atom(String::from("signal")),
+                                    ]))
+                                    .is_err()
+                                {
                                     break;
                                 }
                             }
 
                             Ok(process::Control::Error(stream)) => {
                                 // advise the port that the spawned process has had an error
-                                if let Err(..) = port_tx.send(Term::Tuple(vec![
-                                    Term::Atom(String::from("error")),
-                                    child_id.clone(),
-                                    stream_to_atom(&stream),
-                                ])) {
+                                if port_tx
+                                    .send(Term::Tuple(vec![
+                                        Term::Atom(String::from("error")),
+                                        child_id.clone(),
+                                        stream_to_atom(&stream),
+                                    ]))
+                                    .is_err()
+                                {
                                     break;
                                 }
                             }
@@ -444,7 +459,7 @@ fn source() -> (Receiver<Term>, JoinHandle<()>) {
         let mut stdin = io::stdin();
 
         while let Ok(term) = burp::read(&mut stdin) {
-            if let Err(..) = tx.send(term) {
+            if tx.send(term).is_err() {
                 break;
             }
         }
@@ -465,7 +480,7 @@ fn sink() -> (Sender<Term>, JoinHandle<()>) {
 
         while let Ok(term) = rx.recv() {
             burp::write(&mut stdout, &term).unwrap();
-            if let Err(..) = io::stdout().flush() {
+            if io::stdout().flush().is_err() {
                 break;
             }
         }

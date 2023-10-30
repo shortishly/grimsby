@@ -94,31 +94,31 @@ impl Process {
                 loop {
                     match control_rx.recv() {
                         Ok(Control::Close(Stream::Input)) => {
-                            if let Err(..) = stdin_tx.send(Control::Close(Stream::Input)) {
+                            if stdin_tx.send(Control::Close(Stream::Input)).is_err() {
                                 break;
                             }
                         }
 
                         Ok(Control::EndOfFile(stream)) => {
-                            if let Err(..) = parent_tx.send(Control::EndOfFile(stream)) {
+                            if parent_tx.send(Control::EndOfFile(stream)).is_err() {
                                 break;
                             }
                         }
 
                         Ok(Control::Error(stream)) => {
-                            if let Err(..) = parent_tx.send(Control::Error(stream)) {
+                            if parent_tx.send(Control::Error(stream)).is_err() {
                                 break;
                             }
                         }
 
                         Ok(Control::Received { stream, data }) => {
-                            if let Err(..) = parent_tx.send(Control::Received { stream, data }) {
+                            if parent_tx.send(Control::Received { stream, data }).is_err() {
                                 break;
                             }
                         }
 
                         Ok(Control::Send(data)) => {
-                            if let Err(..) = stdin_tx.send(Control::Send(data)) {
+                            if stdin_tx.send(Control::Send(data)).is_err() {
                                 break;
                             }
                         }
@@ -174,7 +174,7 @@ fn stdin_handler(
         match input_rx.recv() {
             Ok(Control::Send(data)) => {
                 if let Ok(()) = stdin.write_all(data.as_slice()) {
-                    if let Err(..) = stdin.flush() {
+                    if stdin.flush().is_err() {
                         control_tx
                             .send(Control::Error(Stream::Input))
                             .unwrap_or_default();
@@ -233,10 +233,13 @@ fn stdout_handler(control_tx: Sender<Control>, child: &mut Child) -> Option<Join
                     let amt = buffer.len();
                     r.consume(amt);
 
-                    if let Err(..) = control_tx.send(Control::Received {
-                        stream: Stream::Output,
-                        data,
-                    }) {
+                    if control_tx
+                        .send(Control::Received {
+                            stream: Stream::Output,
+                            data,
+                        })
+                        .is_err()
+                    {
                         break;
                     }
                 }
@@ -274,10 +277,13 @@ fn stderr_handler(control_tx: Sender<Control>, child: &mut Child) -> Option<Join
                     let amt = buffer.len();
                     r.consume(amt);
 
-                    if let Err(..) = control_tx.send(Control::Received {
-                        stream: Stream::Error,
-                        data,
-                    }) {
+                    if control_tx
+                        .send(Control::Received {
+                            stream: Stream::Error,
+                            data,
+                        })
+                        .is_err()
+                    {
                         break;
                     }
                 }

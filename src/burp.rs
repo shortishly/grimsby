@@ -47,8 +47,7 @@ pub fn read(r: &mut dyn Read) -> Result<Term, Error> {
     r.read_exact(&mut buf)?;
     let length = u32::from_be_bytes(buf);
 
-    let mut v = Vec::new();
-    v.resize(length as usize, 0);
+    let mut v = vec![0; length as usize];
 
     r.read_exact(v.as_mut_slice())?;
 

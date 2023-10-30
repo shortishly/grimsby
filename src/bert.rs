@@ -176,7 +176,7 @@ pub enum Reference {
     },
 }
 
-//// Converts Erlang External Term Format into an Erlang Term.
+/// Converts Erlang External Term Format into an Erlang Term.
 ///
 /// # Examples
 ///

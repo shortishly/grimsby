@@ -44,7 +44,7 @@ true
 ok
 ```
 
-Whereas `sum` will not, because requires its standard input to be
+Whereas `sum` will not, because it requires its standard input to be
 closed before responding with the checksum:
 
 ```erlang
@@ -115,7 +115,7 @@ with `grimsby_command`:
   %% optional arg0 name
   arg0 => string(),
 
-  %% optional working diretory of the process
+  %% optional working directory of the process
   cd => file:filename()
 ```
 
@@ -130,7 +130,7 @@ application that needs asynchronous notification on receiving data,
 or the exit of the spawned process.
 
 Note that, notifications are sent using `gen_statem:send_request/4`
-and *must* be replied to! An 'ok' will continue processing, while
+and *must* be replied to! An `ok` will continue processing, while
 `{error, term()}` will stop the process.
 
 The parameters supplied to spawn a process are the same as for
@@ -150,7 +150,7 @@ The parameters supplied to spawn a process are the same as for
   %% optional arg0 name
   arg0 => string(),
 
-  %% optional working diretory of the process
+  %% optional working directory of the process
   cd => file:filename()
 
   %% optional pid/name of process to send messages
@@ -246,7 +246,7 @@ The following messages are exchanged over the port:
    %% optional arg0 name
    arg0 => string(),
 
-   %% optional working diretory of the process
+   %% optional working directory of the process
    cd => file:filename()}
 }
 ```
