@@ -21,19 +21,19 @@ fn integer_ext(w: &mut dyn Write, integer: &i32) -> Result<(), Error> {
     w.write_all(&integer.to_be_bytes())
 }
 
-fn atom_ext(w: &mut dyn Write, value: &String) -> Result<(), Error> {
+fn atom_ext(w: &mut dyn Write, value: &str) -> Result<(), Error> {
     u8(w, &super::ATOM_UTF8_EXT)?;
     u16(w, &(value.len() as u16))?;
     let mut os = OsString::new();
-    os.push(value.as_str());
+    os.push(value);
     w.write_all(os.as_os_str().as_bytes())
 }
 
-fn string_ext(w: &mut dyn Write, value: &String) -> Result<(), Error> {
+fn string_ext(w: &mut dyn Write, value: &str) -> Result<(), Error> {
     u8(w, &super::STRING_EXT)?;
     u16(w, &(value.len() as u16))?;
     let mut os = OsString::new();
-    os.push(value.as_str());
+    os.push(value);
     w.write_all(os.as_os_str().as_bytes())
 }
 
