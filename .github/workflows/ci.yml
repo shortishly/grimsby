@@ -31,11 +31,7 @@ jobs:
       - run: cargo test
       - name: Build
         run: make deps app dialyze tests
-      - run: |
-          echo MATRIX_OTP="${{matrix.otp}}" >> $GITHUB_ENV
-          echo MATRIX_OS="${{matrix.os}}" >> $GITHUB_ENV
-          echo ARTIFACT_NAME="ct-logs-${MATRIX_OS}-${MATRIX_OTP}" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{env.ARTIFACT_NAME}}
+          name: ct-logs-${{matrix.os}}-${{matrix.otp}}
           path: logs
